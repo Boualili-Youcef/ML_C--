@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/build",
+  "command": "/usr/bin/c++  -I/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src -g -std=gnu++17 -o CMakeFiles/DecisionTree.dir/src/main.cpp.o -c /home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/main.cpp",
+  "file": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/main.cpp",
+  "output": "CMakeFiles/DecisionTree.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/build",
+  "command": "/usr/bin/c++  -I/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src -g -std=gnu++17 -o CMakeFiles/DecisionTree.dir/src/DataLoader.cpp.o -c /home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/DataLoader.cpp",
+  "file": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/DataLoader.cpp",
+  "output": "CMakeFiles/DecisionTree.dir/src/DataLoader.cpp.o"
+},
+{
+  "directory": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/build",
+  "command": "/usr/bin/c++  -I/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src -g -std=gnu++17 -o CMakeFiles/DecisionTree.dir/src/DecisionTree.cpp.o -c /home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/DecisionTree.cpp",
+  "file": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/DecisionTree.cpp",
+  "output": "CMakeFiles/DecisionTree.dir/src/DecisionTree.cpp.o"
+}
+]

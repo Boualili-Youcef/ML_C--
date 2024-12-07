@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/DecisionTree.dir/src/main.cpp.o CMakeFiles/DecisionTree.dir/src/DataLoader.cpp.o CMakeFiles/DecisionTree.dir/src/DecisionTree.cpp.o -o DecisionTree 
