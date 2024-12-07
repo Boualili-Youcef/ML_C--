@@ -13,8 +13,8 @@
 },
 {
   "directory": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/build",
-  "command": "/usr/bin/c++  -I/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src -g -std=gnu++17 -o CMakeFiles/DecisionTree.dir/src/DecisionTree.cpp.o -c /home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/DecisionTree.cpp",
-  "file": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/DecisionTree.cpp",
-  "output": "CMakeFiles/DecisionTree.dir/src/DecisionTree.cpp.o"
+  "command": "/usr/bin/c++  -I/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src -g -std=gnu++17 -o CMakeFiles/DecisionTree.dir/src/Noeud.cpp.o -c /home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/Noeud.cpp",
+  "file": "/home/youcef/Documents/C++/Learning_C++/ML_C++/decision_tree/src/Noeud.cpp",
+  "output": "CMakeFiles/DecisionTree.dir/src/Noeud.cpp.o"
 }
 ]

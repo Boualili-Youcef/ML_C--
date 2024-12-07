@@ -11,6 +11,6 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(src)
 
 # Ajouter l'exécutable en spécifiant les fichiers .cpp
-add_executable(DecisionTree src/main.cpp src/DataLoader.cpp src/DecisionTree.cpp)
+add_executable(DecisionTree src/main.cpp src/DataLoader.cpp src/Noeud.cpp)
 
 file(COPY ${CMAKE_SOURCE_DIR}/dataset/tp_donnees.csv DESTINATION ${CMAKE_BINARY_DIR}/data)
