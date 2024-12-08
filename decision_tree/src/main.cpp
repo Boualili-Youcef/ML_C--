@@ -45,12 +45,20 @@ int main()
     {
         vector<map<int, double>> result = node.prediction(data[i].features);
         node.show_proba_empirique(result);
-
     }
     cout << "fin" << endl;
 
     cout << "Precision : " << node.precision(data) << endl;
+    cout << endl;
+    vector<vector<DataPoint>> train_test = node.split_train_test(data);
+    cout << "Taille du train set : " << train_test[0].size() << endl;
+    csv.head(train_test[0]);
+    cout << "Taille du test set : " << train_test[1].size() << endl;
+    csv.head(train_test[1]);
+
+    /*
+        cout << endl;
+        node.train_data(data, 5);*/
+
     return 0;
 }
-
-

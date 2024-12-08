@@ -222,8 +222,8 @@ void Noeud::grow(const vector<DataPoint> &data, int profondeur)
     {
         node_question = best_question;
         profondeur++;
-        enfants["gauche"] = make_unique<Noeud>(profondeur_max); 
-        enfants["droite"] = make_unique<Noeud>(profondeur_max); 
+        enfants["gauche"] = make_unique<Noeud>(profondeur_max);
+        enfants["droite"] = make_unique<Noeud>(profondeur_max);
         enfants["gauche"]->grow(d1, profondeur);
         enfants["droite"]->grow(d2, profondeur);
     }
@@ -278,28 +278,104 @@ vector<map<int, double>> Noeud::prediction(const vector<double> &x)
     return proba;
 }
 
-double Noeud::precision(const vector<DataPoint> &data) {
+double Noeud::precision(const vector<DataPoint> &data)
+{
     int correct_predictions = 0;
     int total_predictions = data.size();
 
-    for (const auto &d : data) {
+    for (const auto &d : data)
+    {
         vector<map<int, double>> prediction = this->prediction(d.features);
 
         double max_prob = -1;
         int predicted_class = -1;
-        for (const auto &p : prediction) {
-            for (const auto &e : p) {
-                if (e.second > max_prob) {
+        for (const auto &p : prediction)
+        {
+            for (const auto &e : p)
+            {
+                if (e.second > max_prob)
+                {
                     max_prob = e.second;
                     predicted_class = e.first;
                 }
             }
         }
 
-        if (predicted_class == d.label) {
+        if (predicted_class == d.label)
+        {
             correct_predictions++;
         }
     }
 
     return (total_predictions > 0) ? ((double)(correct_predictions) / total_predictions) * 100 : 0;
 }
+
+vector<vector<DataPoint>> Noeud::split_train_test(const vector<DataPoint> &data)
+{
+    vector<DataPoint> shuffled_data = data;
+    vector<DataPoint> train_set;
+    vector<DataPoint> test_set;
+
+    random_device rd;
+    default_random_engine rng(rd());
+    shuffle(shuffled_data.begin(), shuffled_data.end(), rng);
+
+    int train_set_size = int(shuffled_data.size() * 0.8);
+
+    for (size_t i = 0; i < shuffled_data.size(); i++)
+    {
+        if (i < train_set_size)
+        {
+            train_set.push_back(shuffled_data[i]);
+        }
+        else
+        {
+            test_set.push_back(shuffled_data[i]);
+        }
+    }
+    return {train_set, test_set};
+}
+
+double pourcentage(const vector<double> &data)
+{
+    double sum = 0, size, pst;
+    size = data.size();
+    for (int i = 0; i < size; i++)
+    {
+        sum += data[i];
+    }
+    return pst = size == 0 ? 0 : (double)sum / size;
+}
+
+/*
+void Noeud::train_data(const vector<DataPoint> &data, int depth)
+{
+    vector<vector<DataPoint>> train_test = split_train_test(data);
+    vector<DataPoint> train = train_test[0];
+    vector<DataPoint> test = train_test[1];
+    vector<double> train_accuracies;
+    vector<double> test_accuracies;
+
+    // Ouvre un fichier CSV pour écrire les résultats
+    ofstream file("../dataset/accuracies.csv");
+    file << "depth,train_accuracy,test_accuracy\n";  // Entêtes de colonnes
+
+    for (size_t i = 0; i < depth; i++)
+    {
+        grow(train);
+        double train_accuracy = precision(train);
+        double test_accuracy = precision(test);
+        train_accuracies.push_back(train_accuracy);
+        test_accuracies.push_back(test_accuracy);
+        cout << train_accuracy << "  ";
+
+        // Écrire les résultats dans le fichier
+        file << i + 1 << "," << train_accuracy << "," << test_accuracy << "\n";
+    }
+
+    file.close();  // Ferme le fichier après avoir écrit toutes les données
+
+    cout << endl <<"Précision moyenne du Train pour une profondeur de " << depth << " : " << pourcentage(train_accuracies) << endl;
+    cout << "Précision moyenne du Test pour une profondeur de " << depth << " : " << pourcentage(test_accuracies) << endl;
+}
+*/

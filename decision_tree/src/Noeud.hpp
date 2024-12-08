@@ -9,7 +9,7 @@
 #include <cmath>
 #include <algorithm>
 #include <memory>
-#include <optional>
+#include <random>
 
 #include <DataLoader.hpp>
 
@@ -47,7 +47,8 @@ public:
     Question best_split(const vector<DataPoint> &data);
     void grow(const vector<DataPoint> &data, int profondeur = 0);
     vector<map<int, double>> getProba();
-    vector<map<int, double>> prediction(const vector<double>& x);
+    vector<map<int, double>> prediction(const vector<double> &x);
     double precision(const vector<DataPoint> &data);
-
+    vector<vector<DataPoint>> split_train_test(const vector<DataPoint> &data);
+    // void train_data(const vector<DataPoint> &data, int depth); // Pas au point 
 };
