@@ -40,4 +40,5 @@ public:
     void show_questions(const vector<Question> &questions, int size = 10);
     vector<Question> liste_questions(const vector<DataPoint> &data);
     double gain_entropie(const vector<DataPoint> &data, const Question &question);
+    Question best_split(const vector<DataPoint> &data);
 };

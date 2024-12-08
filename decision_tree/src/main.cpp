@@ -33,5 +33,8 @@ int main()
     cout << endl;
     cout << "Gain : " << node.gain_entropie(data, {"Genre", 0.5}) << endl;
 
+    cout << endl;
+    Question question = node.best_split(data);
+    cout << "Best_question : (" << question.attribut << ", " << question.seuil << ")" << endl;
     return 0;
 }

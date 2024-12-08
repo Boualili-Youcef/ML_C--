@@ -60,7 +60,7 @@ double Noeud::entropy(const vector<DataPoint> &data)
     {
         for (const auto &proba : class_probas)
         {
-            if (proba.second > 0.0) 
+            if (proba.second > 0.0)
             {
                 entropy += proba.second * log2(proba.second);
             }
@@ -166,4 +166,21 @@ double Noeud::gain_entropie(const vector<DataPoint> &data, const Question &quest
     double r2 = (double)d2.size() / data.size();
 
     return entropy(data) - r1 * entropy(d1) - r2 * entropy(d2);
+}
+
+Question Noeud::best_split(const vector<DataPoint> &data)
+{
+    double gain_max;
+    vector<Question> questions = liste_questions(data);
+    Question best_question;
+    for (const Question &question : questions)
+    {
+        double gain_question = gain_entropie(data, question);
+        if (gain_question > gain_max)
+        {
+            gain_max = gain_question;
+            best_question = question;
+        }
+    }
+    return best_question;
 }
