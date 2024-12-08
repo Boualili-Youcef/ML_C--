@@ -35,4 +35,7 @@ public:
     void show_proba_empirique(vector<map<int, double>> result);
     double entropy(vector<DataPoint> data);
     vector<vector<DataPoint>> split(const vector<DataPoint> &data, const Question &question);
+    vector<Question> list_separ_attributs(const vector<DataPoint> &data, const string &attribute);
+    void show_questions(const vector<Question>& questions, int size = 10);
+
 };

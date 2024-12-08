@@ -21,5 +21,9 @@ int main()
     cout << " ************************* " << endl;
     csv.head(split[1]);
 
+    cout << endl;
+    vector<Question> quesions = node.list_separ_attributs(data, "Age");
+    node.show_questions(quesions);
+
     return 0;
 }

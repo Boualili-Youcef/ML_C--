@@ -25,6 +25,5 @@ public:
     vector<DataPoint> loadCSV(const string &filePath);
     int getAttributeIndex(const string &attributeName) const;
     void head(const vector<DataPoint> &data, int size = 5);
-
     static const std::vector<std::string> &getColumnNames();
 };

@@ -87,3 +87,40 @@ vector<vector<DataPoint>> Noeud::split(const vector<DataPoint> &data, const Ques
 
     return {d1, d2};
 }
+
+// Constucting a vectore of all possible question concidering an attribute
+vector<Question> Noeud::list_separ_attributs(const vector<DataPoint> &data, const string &attribute)
+{
+    int index = loader.getAttributeIndex(attribute);
+    vector<Question> vec_question;
+    set<double> seuils;
+
+    for (size_t i = 0; i < data.size() - 1; ++i)
+    {
+        seuils.insert((data[i].features[index] + data[i + 1].features[index]) / 2);
+    }
+    for (const double &s : seuils)
+    {
+
+        vec_question.push_back({attribute, s});
+    }
+    return vec_question;
+}
+
+// Display questions
+void Noeud::show_questions(const vector<Question> &questions, int size)
+{
+    cout << "{";
+    for (const auto &question : questions)
+    {
+        size--;
+        cout << "(" << question.attribut << ", " << question.seuil << ") ";
+        if (size == 0)
+        {
+            break;
+        }
+    }
+    cout << "}" << endl;
+}
+
+// 
