@@ -14,7 +14,8 @@ int main()
     Noeud node;
     vector<map<int, double>> result = node.proba_empirique(data);
     node.show_proba_empirique(result);
-    cout << "Entropy : " << node.entropy(data) << endl << endl;
+    cout << "Entropy : " << node.entropy(data) << endl
+         << endl;
 
     vector<vector<DataPoint>> split = node.split(data, {"Age", 16});
     csv.head(split[0]);
@@ -24,6 +25,10 @@ int main()
     cout << endl;
     vector<Question> quesions = node.list_separ_attributs(data, "Age");
     node.show_questions(quesions);
+
+    cout << endl;
+    vector<Question> liste_quesions = node.liste_questions(data);
+    node.show_questions(liste_quesions);
 
     return 0;
 }

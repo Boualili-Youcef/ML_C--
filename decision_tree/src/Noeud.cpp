@@ -95,15 +95,30 @@ vector<Question> Noeud::list_separ_attributs(const vector<DataPoint> &data, cons
     vector<Question> vec_question;
     set<double> seuils;
 
-    for (size_t i = 0; i < data.size() - 1; ++i)
+    double seuil;
+
+    vector<DataPoint> sorted_data = data;
+    sort(sorted_data.begin(), sorted_data.end(),
+         [index](const DataPoint &a, const DataPoint &b)
+         {
+             return a.features[index] < b.features[index];
+         });
+
+    for (size_t i = 0; i < sorted_data.size() - 1; ++i)
     {
-        seuils.insert((data[i].features[index] + data[i + 1].features[index]) / 2);
+        if (sorted_data[i].features[index] != sorted_data[i + 1].features[index])
+        {
+            seuil = (sorted_data[i].features[index] + sorted_data[i + 1].features[index]) / 2;
+            seuils.insert(seuil);
+        }
     }
+
+    // Remplissage du vecteur des questions avec les seuils trouvés
     for (const double &s : seuils)
     {
-
         vec_question.push_back({attribute, s});
     }
+
     return vec_question;
 }
 
@@ -123,4 +138,16 @@ void Noeud::show_questions(const vector<Question> &questions, int size)
     cout << "}" << endl;
 }
 
-// 
+// All questions now
+vector<Question> Noeud::liste_questions(const vector<DataPoint> &data)
+{
+    vector<string> attributes = loader.getColumnNames();
+    vector<Question> liste_questions;
+    cout << attributes[attributes.size() - 2] << endl;
+    for (size_t i = 0; i < attributes.size() - 1; ++i)
+    {
+        vector<Question> tmp = list_separ_attributs(data, attributes[i]);
+        liste_questions.insert(liste_questions.end(), tmp.begin(), tmp.end());
+    }
+    return liste_questions;
+}
