@@ -125,6 +125,9 @@
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"path" : "dataset/tp_donnees.csv"
 		}
 	],
 	"kind" : "cmakeFiles",

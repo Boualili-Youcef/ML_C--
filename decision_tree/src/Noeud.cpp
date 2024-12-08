@@ -347,7 +347,7 @@ double pourcentage(const vector<double> &data)
     return pst = size == 0 ? 0 : (double)sum / size;
 }
 
-/*
+
 void Noeud::train_data(const vector<DataPoint> &data, int depth)
 {
     vector<vector<DataPoint>> train_test = split_train_test(data);
@@ -356,26 +356,24 @@ void Noeud::train_data(const vector<DataPoint> &data, int depth)
     vector<double> train_accuracies;
     vector<double> test_accuracies;
 
-    // Ouvre un fichier CSV pour écrire les résultats
     ofstream file("../dataset/accuracies.csv");
-    file << "depth,train_accuracy,test_accuracy\n";  // Entêtes de colonnes
+    file << "depth,train_accuracy,test_accuracy\n"; 
 
     for (size_t i = 0; i < depth; i++)
     {
-        grow(train);
-        double train_accuracy = precision(train);
-        double test_accuracy = precision(test);
+        Noeud noeud = Noeud(i);
+        noeud.grow(train);
+        double train_accuracy = noeud.precision(train);
+        double test_accuracy = noeud.precision(test);
         train_accuracies.push_back(train_accuracy);
         test_accuracies.push_back(test_accuracy);
         cout << train_accuracy << "  ";
 
-        // Écrire les résultats dans le fichier
         file << i + 1 << "," << train_accuracy << "," << test_accuracy << "\n";
     }
 
-    file.close();  // Ferme le fichier après avoir écrit toutes les données
+    file.close();  
 
     cout << endl <<"Précision moyenne du Train pour une profondeur de " << depth << " : " << pourcentage(train_accuracies) << endl;
     cout << "Précision moyenne du Test pour une profondeur de " << depth << " : " << pourcentage(test_accuracies) << endl;
 }
-*/

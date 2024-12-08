@@ -50,5 +50,5 @@ public:
     vector<map<int, double>> prediction(const vector<double> &x);
     double precision(const vector<DataPoint> &data);
     vector<vector<DataPoint>> split_train_test(const vector<DataPoint> &data);
-    // void train_data(const vector<DataPoint> &data, int depth); // Pas au point 
+    void train_data(const vector<DataPoint> &data, int depth); // Pas au point 
 };

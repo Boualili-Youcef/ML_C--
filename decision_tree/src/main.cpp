@@ -55,10 +55,8 @@ int main()
     csv.head(train_test[0]);
     cout << "Taille du test set : " << train_test[1].size() << endl;
     csv.head(train_test[1]);
-
-    /*
-        cout << endl;
-        node.train_data(data, 5);*/
+    cout << endl;
+    node.train_data(data, 30);
 
     return 0;
 }
