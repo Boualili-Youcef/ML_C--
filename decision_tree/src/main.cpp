@@ -11,7 +11,7 @@ int main()
     vector<DataPoint> data = csv.loadCSV("../dataset/tp_donnees.csv");
     csv.head(data, 15);
 
-    Noeud node;
+    Noeud node = Noeud(7);
     vector<map<int, double>> result = node.proba_empirique(data);
     node.show_proba_empirique(result);
     cout << "Entropy : " << node.entropy(data) << endl
@@ -36,5 +36,8 @@ int main()
     cout << endl;
     Question question = node.best_split(data);
     cout << "Best_question : (" << question.attribut << ", " << question.seuil << ")" << endl;
+
+    cout << endl;
+    node.grow(data, 3);
     return 0;
 }

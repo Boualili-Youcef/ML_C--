@@ -18,12 +18,13 @@ map<int, int> label_counts(const vector<DataPoint> &data)
 // double is the empirical value
 vector<map<int, double>> Noeud::proba_empirique(const vector<DataPoint> &data)
 {
+    vector<map<int, double>> proba;
+
     if (data.size() == 0)
     {
-        return {};
+        return proba;
     }
     map<int, int> label_map = label_counts(data);
-    vector<map<int, double>> proba;
     for (const auto &label : label_map)
     {
         map<int, double> proba_label;
@@ -147,7 +148,6 @@ vector<Question> Noeud::liste_questions(const vector<DataPoint> &data)
 {
     vector<string> attributes = loader.getColumnNames();
     vector<Question> liste_questions;
-    cout << attributes[attributes.size() - 2] << endl;
     for (size_t i = 0; i < attributes.size() - 1; ++i)
     {
         vector<Question> tmp = list_separ_attributs(data, attributes[i]);
@@ -170,9 +170,16 @@ double Noeud::gain_entropie(const vector<DataPoint> &data, const Question &quest
 
 Question Noeud::best_split(const vector<DataPoint> &data)
 {
-    double gain_max;
+    double gain_max = -std::numeric_limits<double>::infinity();
     vector<Question> questions = liste_questions(data);
+
+    if (questions.empty())
+    {
+        return {"end", -1}; // We can do better her !!
+    }
+
     Question best_question;
+
     for (const Question &question : questions)
     {
         double gain_question = gain_entropie(data, question);
@@ -182,5 +189,55 @@ Question Noeud::best_split(const vector<DataPoint> &data)
             best_question = question;
         }
     }
+
     return best_question;
+}
+
+void Noeud::grow(const vector<DataPoint> &data, int profondeur)
+{
+    if (data.empty())
+    {
+        cout << "Aucune donnée, profondeur: " << profondeur << endl;
+        hauteur = profondeur;
+        this->proba = proba_empirique(data);
+        return;
+    }
+
+    donnees = data;
+    double entropy_value = this->entropy(data);
+
+    Question best_question = best_split(data);
+
+    if (best_question.attribut == "end" && best_question.seuil == -1)
+    {
+        cout << "Fin de la séparation à profondeur: " << profondeur << endl;
+        hauteur = profondeur;
+        this->proba = proba_empirique(data);
+        return;
+    }
+
+    vector<vector<DataPoint>> d = split(data, best_question);
+    vector<DataPoint> d1 = d[0];
+    vector<DataPoint> d2 = d[1];
+
+    if (entropy_value > 0 && d1.size() > 0 && d2.size() > 0 && profondeur_max > profondeur)
+    {
+        node_question = best_question;
+        profondeur++;
+        enfants["left"] = make_unique<Noeud>(profondeur_max);
+        enfants["right"] = make_unique<Noeud>(profondeur_max);
+        enfants["left"]->grow(d1, profondeur);
+        enfants["right"]->grow(d2, profondeur);
+    }
+    else
+    {
+        hauteur = profondeur;
+        this->proba = proba_empirique(data);
+        this->show_proba_empirique(proba);
+    }
+}
+
+vector<map<int, double>> Noeud::getProba()
+{
+    return proba;
 }
