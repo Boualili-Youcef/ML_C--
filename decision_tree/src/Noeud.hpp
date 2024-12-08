@@ -11,7 +11,6 @@
 #include <memory>
 #include <optional>
 
-
 #include <DataLoader.hpp>
 
 using namespace std;
@@ -25,17 +24,17 @@ struct Question
 class Noeud
 {
 private:
-    DataLoader loader;                         
+    DataLoader loader;
     vector<Question> question;
-    Question node_question;        
-    map<std::string, std::unique_ptr<Noeud>> enfants; 
-    vector<DataPoint> donnees;         
-    int profondeur_max;                      
-    vector<map<int, double>> proba;                           
-    int hauteur = 0;  
+    Question node_question = {"end", -1};
+    map<std::string, std::unique_ptr<Noeud>> enfants;
+    vector<DataPoint> donnees;
+    int profondeur_max;
+    vector<map<int, double>> proba;
+    int hauteur = 0;
 
 public:
-    Noeud(int profondeur_max = numeric_limits<int>::max());
+    Noeud(int profondeur_max = 5);
 
     vector<map<int, double>> proba_empirique(const vector<DataPoint> &data);
     void show_proba_empirique(const vector<map<int, double>> &result);
@@ -46,6 +45,9 @@ public:
     vector<Question> liste_questions(const vector<DataPoint> &data);
     double gain_entropie(const vector<DataPoint> &data, const Question &question);
     Question best_split(const vector<DataPoint> &data);
-    void grow(const vector<DataPoint> &data, int profondeur=0);
+    void grow(const vector<DataPoint> &data, int profondeur = 0);
     vector<map<int, double>> getProba();
+    vector<map<int, double>> prediction(const vector<double>& x);
+    double precision(const vector<DataPoint> &data);
+
 };

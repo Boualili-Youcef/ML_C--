@@ -170,7 +170,7 @@ double Noeud::gain_entropie(const vector<DataPoint> &data, const Question &quest
 
 Question Noeud::best_split(const vector<DataPoint> &data)
 {
-    double gain_max = -std::numeric_limits<double>::infinity();
+    double gain_max = -numeric_limits<double>::infinity();
     vector<Question> questions = liste_questions(data);
 
     if (questions.empty())
@@ -197,7 +197,6 @@ void Noeud::grow(const vector<DataPoint> &data, int profondeur)
 {
     if (data.empty())
     {
-        cout << "Aucune donnée, profondeur: " << profondeur << endl;
         hauteur = profondeur;
         this->proba = proba_empirique(data);
         return;
@@ -210,7 +209,6 @@ void Noeud::grow(const vector<DataPoint> &data, int profondeur)
 
     if (best_question.attribut == "end" && best_question.seuil == -1)
     {
-        cout << "Fin de la séparation à profondeur: " << profondeur << endl;
         hauteur = profondeur;
         this->proba = proba_empirique(data);
         return;
@@ -224,20 +222,84 @@ void Noeud::grow(const vector<DataPoint> &data, int profondeur)
     {
         node_question = best_question;
         profondeur++;
-        enfants["left"] = make_unique<Noeud>(profondeur_max);
-        enfants["right"] = make_unique<Noeud>(profondeur_max);
-        enfants["left"]->grow(d1, profondeur);
-        enfants["right"]->grow(d2, profondeur);
+        enfants["gauche"] = make_unique<Noeud>(profondeur_max); 
+        enfants["droite"] = make_unique<Noeud>(profondeur_max); 
+        enfants["gauche"]->grow(d1, profondeur);
+        enfants["droite"]->grow(d2, profondeur);
     }
     else
     {
         hauteur = profondeur;
         this->proba = proba_empirique(data);
-        this->show_proba_empirique(proba);
     }
 }
 
 vector<map<int, double>> Noeud::getProba()
 {
     return proba;
+}
+
+vector<map<int, double>> Noeud::prediction(const vector<double> &x)
+{
+    if (!proba.empty())
+    {
+        return proba;
+    }
+
+    if (node_question.seuil != -1)
+    {
+        int index = loader.getAttributeIndex(node_question.attribut);
+        if (x[index] < node_question.seuil)
+        {
+            if (enfants["gauche"] != nullptr)
+            {
+                return enfants["gauche"]->prediction(x);
+            }
+            else
+            {
+
+                return proba;
+            }
+        }
+        else
+        {
+            if (enfants["droite"] != nullptr)
+            {
+                return enfants["droite"]->prediction(x);
+            }
+            else
+            {
+
+                return proba;
+            }
+        }
+    }
+
+    return proba;
+}
+
+double Noeud::precision(const vector<DataPoint> &data) {
+    int correct_predictions = 0;
+    int total_predictions = data.size();
+
+    for (const auto &d : data) {
+        vector<map<int, double>> prediction = this->prediction(d.features);
+
+        double max_prob = -1;
+        int predicted_class = -1;
+        for (const auto &p : prediction) {
+            for (const auto &e : p) {
+                if (e.second > max_prob) {
+                    max_prob = e.second;
+                    predicted_class = e.first;
+                }
+            }
+        }
+
+        if (predicted_class == d.label) {
+            correct_predictions++;
+        }
+    }
+
+    return (total_predictions > 0) ? ((double)(correct_predictions) / total_predictions) * 100 : 0;
 }

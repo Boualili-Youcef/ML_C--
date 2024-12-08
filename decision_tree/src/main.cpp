@@ -9,9 +9,9 @@ int main()
     // Charger le dataset
     DataLoader csv;
     vector<DataPoint> data = csv.loadCSV("../dataset/tp_donnees.csv");
-    csv.head(data, 15);
+    csv.head(data, 4);
 
-    Noeud node = Noeud(7);
+    Noeud node = Noeud(15);
     vector<map<int, double>> result = node.proba_empirique(data);
     node.show_proba_empirique(result);
     cout << "Entropy : " << node.entropy(data) << endl
@@ -38,6 +38,19 @@ int main()
     cout << "Best_question : (" << question.attribut << ", " << question.seuil << ")" << endl;
 
     cout << endl;
-    node.grow(data, 3);
+    node.grow(data, 0);
+
+    cout << endl;
+    for (int i = 0; i < 25; ++i)
+    {
+        vector<map<int, double>> result = node.prediction(data[i].features);
+        node.show_proba_empirique(result);
+
+    }
+    cout << "fin" << endl;
+
+    cout << "Precision : " << node.precision(data) << endl;
     return 0;
 }
+
+
