@@ -16,7 +16,7 @@ map<int, int> label_counts(const vector<DataPoint> &data)
 
 // int is the value of the label
 // double is the empirical value
-vector<map<int, double>> Noeud::proba_empirique(vector<DataPoint> data)
+vector<map<int, double>> Noeud::proba_empirique(const vector<DataPoint> &data)
 {
     if (data.size() == 0)
     {
@@ -33,7 +33,7 @@ vector<map<int, double>> Noeud::proba_empirique(vector<DataPoint> data)
     return proba;
 }
 
-void Noeud::show_proba_empirique(vector<map<int, double>> result)
+void Noeud::show_proba_empirique(const vector<map<int, double>> &result)
 {
     cout << "{";
     for (size_t i = 0; i < result.size(); i++)
@@ -51,15 +51,19 @@ void Noeud::show_proba_empirique(vector<map<int, double>> result)
 }
 
 // Part entropy
-double Noeud::entropy(vector<DataPoint> data)
+double Noeud::entropy(const vector<DataPoint> &data)
 {
     vector<map<int, double>> pe_value = proba_empirique(data);
-    double entropy;
-    for (size_t i = 0; i < pe_value.size(); i++)
+    double entropy = 0.0;
+
+    for (const auto &class_probas : pe_value)
     {
-        for (const auto &proba : pe_value[i])
+        for (const auto &proba : class_probas)
         {
-            entropy += proba.second * log2(proba.second);
+            if (proba.second > 0.0) 
+            {
+                entropy += proba.second * log2(proba.second);
+            }
         }
     }
     return -entropy;
@@ -150,4 +154,16 @@ vector<Question> Noeud::liste_questions(const vector<DataPoint> &data)
         liste_questions.insert(liste_questions.end(), tmp.begin(), tmp.end());
     }
     return liste_questions;
+}
+
+double Noeud::gain_entropie(const vector<DataPoint> &data, const Question &question)
+{
+    vector<vector<DataPoint>> data_split = split(data, question);
+    vector<DataPoint> d1 = data_split[0];
+    vector<DataPoint> d2 = data_split[1];
+
+    double r1 = (double)d1.size() / data.size();
+    double r2 = (double)d2.size() / data.size();
+
+    return entropy(data) - r1 * entropy(d1) - r2 * entropy(d2);
 }

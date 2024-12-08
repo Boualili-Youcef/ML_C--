@@ -30,5 +30,8 @@ int main()
     vector<Question> liste_quesions = node.liste_questions(data);
     node.show_questions(liste_quesions);
 
+    cout << endl;
+    cout << "Gain : " << node.gain_entropie(data, {"Genre", 0.5}) << endl;
+
     return 0;
 }

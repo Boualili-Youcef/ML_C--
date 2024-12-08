@@ -32,12 +32,12 @@ private:
 public:
     Noeud(int max_depth = numeric_limits<int>::max());
 
-    vector<map<int, double>> proba_empirique(vector<DataPoint> data);
-    void show_proba_empirique(vector<map<int, double>> result);
-    double entropy(vector<DataPoint> data);
+    vector<map<int, double>> proba_empirique(const vector<DataPoint> &data);
+    void show_proba_empirique(const vector<map<int, double>> &result);
+    double entropy(const vector<DataPoint> &data);
     vector<vector<DataPoint>> split(const vector<DataPoint> &data, const Question &question);
     vector<Question> list_separ_attributs(const vector<DataPoint> &data, const string &attribute);
     void show_questions(const vector<Question> &questions, int size = 10);
     vector<Question> liste_questions(const vector<DataPoint> &data);
-
-    };
+    double gain_entropie(const vector<DataPoint> &data, const Question &question);
+};
