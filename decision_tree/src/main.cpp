@@ -14,6 +14,12 @@ int main()
     Noeud node;
     vector<map<int, double>> result = node.proba_empirique(data);
     node.show_proba_empirique(result);
+    cout << "Entropy : " << node.entropy(data) << endl << endl;
+
+    vector<vector<DataPoint>> split = node.split(data, {"Age", 16});
+    csv.head(split[0]);
+    cout << " ************************* " << endl;
+    csv.head(split[1]);
 
     return 0;
 }

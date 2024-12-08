@@ -1,5 +1,7 @@
 #include <DataLoader.hpp>
 
+std::vector<std::string> DataLoader::columnNames;
+
 // Fonction pour charger le fichier CSV
 vector<DataPoint> DataLoader::loadCSV(const string &filePath)
 {
@@ -55,43 +57,46 @@ vector<DataPoint> DataLoader::loadCSV(const string &filePath)
     return dataset;
 }
 
-double DataLoader::getAttribute(const DataPoint &point, const std::string &attributeName)
+int DataLoader::getAttributeIndex(const string &attributeName) const
 {
-    for (size_t i = 0; i < columnNames.size(); ++i)
+    for (size_t i = 0; i < getColumnNames().size(); ++i)
     {
-        if (columnNames[i] == attributeName)
+        if (getColumnNames()[i] == attributeName)
         {
-            return point.features[i];
+            return i;
         }
     }
-    return 0.0;
+    throw std::invalid_argument("Attribute not found.");
 }
 
-// Fonction de verification de chargement
+const std::vector<std::string>& DataLoader::getColumnNames() {
+    return columnNames;
+}
+// Fonction de vérification de chargement
 void DataLoader::head(const vector<DataPoint> &data, int size)
 {
-
     if (size > data.size())
     {
         size = data.size();
     }
 
+    // Afficher les noms des colonnes
     for (size_t i = 0; i < columnNames.size() - 1; i++)
     {
-
         cout << columnNames[i] << ", ";
     }
 
     cout << columnNames[columnNames.size() - 1] << endl;
 
-    for (size_t i = 0; i < size - 1; i++)
+    // Afficher les premières lignes de données
+    for (size_t i = 0; i < size; i++)
     {
-        cout << "{feature : ";
+        cout << "{features: ";
         for (size_t j = 0; j < data[i].features.size() - 1; j++)
         {
             cout << data[i].features[j] << ", ";
         }
         cout << data[i].features[data[i].features.size() - 1] << "} ,";
-        cout << " {label : " << data[i].label << "}" << endl;
+        cout << " {label: " << data[i].label << "}" << endl;
     }
 }

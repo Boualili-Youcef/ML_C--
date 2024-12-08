@@ -18,11 +18,13 @@ struct DataPoint
 class DataLoader
 {
 private:
-    std::vector<std::string> columnNames;
+    static std::vector<std::string> columnNames;
+
 public:
     // Fonction pour charger le fichier CSV
     vector<DataPoint> loadCSV(const string &filePath);
-    double getAttribute(const DataPoint &point, const std::string &attributeName);
-    void head(const vector<DataPoint>& data, int size = 5);
+    int getAttributeIndex(const string &attributeName) const;
+    void head(const vector<DataPoint> &data, int size = 5);
 
+    static const std::vector<std::string> &getColumnNames();
 };

@@ -6,6 +6,7 @@
 #include <limits>
 #include <set>
 #include <map>
+#include <cmath>
 
 #include <DataLoader.hpp>
 
@@ -20,6 +21,7 @@ struct Question
 class Noeud
 {
 private:
+    DataLoader loader;
     vector<Question> question;
     // enfants = {}; // TODO les enfants
     int profondeur_max;
@@ -31,4 +33,6 @@ public:
 
     vector<map<int, double>> proba_empirique(vector<DataPoint> data);
     void show_proba_empirique(vector<map<int, double>> result);
+    double entropy(vector<DataPoint> data);
+    vector<vector<DataPoint>> split(const vector<DataPoint> &data, const Question &question);
 };
