@@ -6,14 +6,13 @@ Ce projet implémente un **algorithme d'apprentissage supervisé** : l'arbre de 
 
 ### Objectifs
 
-* **Construction d'un arbre de décision :** Implémenter une structure de données arborescente pour représenter les décisions successives.
+* **Construction d'un arbre de décision :** Implémenter une structure de données arborescente pour représenter les décisions successives. 
 * **Calcul de probabilités empiriques :** Évaluer la probabilité d'une classe à chaque nœud de l'arbre en fonction des données d'entraînement.
 * **Prédiction :** Utiliser l'arbre construit pour classer de nouvelles données.
 
 ### Structure du Projet
 
 Le projet est organisé en plusieurs fichiers :
-
 * **Noeud.hpp/.cpp :** Définition et implémentation de la classe `Noeud`, représentant un nœud dans l'arbre de décision.
 * **DataLoader.hpp/.cpp :** Gestion de l'importation et du prétraitement des données.
 * **Main.cpp :** Point d'entrée du programme, où l'arbre est construit et utilisé pour effectuer des prédictions.
